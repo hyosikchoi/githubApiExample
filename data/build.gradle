@@ -7,6 +7,7 @@ plugins {
 apply from: rootProject.file("android.gradle")
 
 dependencies {
+    implementation project(":domain")
 
     implementation AndroidX.CORE_KTX
     implementation AndroidX.APP_COMPAT
@@ -15,6 +16,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation project(":domain")
+    implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(Kotlin.COROUTINES_CORE)
+    implementation(Kotlin.COROUTINES_ANDROID)
+
+    implementation(Google.HILT_ANDROID)
+    kapt          (Google.HILT_ANDROID_COMPILER)
+
+    // Retrofit , okhttp
+    implementation(Libraries.RETROFIT)
+    implementation(Libraries.RETROFIT_CONVERTER_GSON)
+    implementation(Libraries.OKHTTP)
+    implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
+
+    testImplementation(UnitTest.MOCK_WEB_SERVER)
+    testImplementation(UnitTest.TRUTH)
+    androidTestImplementation(AndroidTest.ANDROID_TRUTH)
 
 }

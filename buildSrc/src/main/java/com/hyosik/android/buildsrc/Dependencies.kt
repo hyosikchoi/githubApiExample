@@ -19,6 +19,7 @@ object Versions {
     const val JUNIT = "4.13.2"
     const val ANDROID_JUNIT = "1.1.2"
     const val ESPRESSO_CORE = "3.3.0"
+    const val TRUTH = "1.0.1"
 }
 
 object Kotlin {
@@ -54,11 +55,14 @@ object Libraries {
 
 object UnitTest {
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
+    const val MOCK_WEB_SERVER = "com.squareup.okhttp3:mockwebserver:${Versions.OKHTTP}"
+    const val TRUTH = "com.google.truth:truth:${Versions.TRUTH}"
 }
 
 object AndroidTest {
     const val ANDROID_JUNIT = "androidx.test.ext:junit:${Versions.ANDROID_JUNIT}"
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.ESPRESSO_CORE}"
+    const val ANDROID_TRUTH = "com.google.truth:truth:${Versions.TRUTH}"
 }
 
 

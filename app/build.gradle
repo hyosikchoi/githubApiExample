@@ -21,6 +21,15 @@ dependencies {
     implementation Google.HILT_ANDROID
     kapt Google.HILT_ANDROID_COMPILER
 
+    // Retrofit
+    implementation Libraries.RETROFIT
+    implementation Libraries.RETROFIT_CONVERTER_GSON
+
+    // okHttp
+    implementation Libraries.OKHTTP
+    implementation Libraries.OKHTTP_LOGGING_INTERCEPTOR
+
+
     implementation project(":data")
     implementation project(":domain")
     implementation project(":presentation")
