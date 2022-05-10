@@ -9,6 +9,8 @@ apply from: rootProject.file("android.gradle")
 
 dependencies {
 
+    implementation project(":domain")
+
     implementation AndroidX.CORE_KTX
     implementation AndroidX.APP_COMPAT
     implementation Google.MATERIAL
@@ -17,8 +19,16 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+    //Coroutine
+    implementation(Kotlin.COROUTINES_CORE)
+    implementation(Kotlin.COROUTINES_ANDROID)
+
     // Dagger Hilt
     implementation Google.HILT_ANDROID
     kapt Google.HILT_ANDROID_COMPILER
+
+    implementation(AndroidX.ACTIVITY_KTX)
+    implementation(AndroidX.FRAGMENT_KTX)
+    implementation(AndroidX.LIFECYCLE_VIEWMODEL_KTX)
 
 }

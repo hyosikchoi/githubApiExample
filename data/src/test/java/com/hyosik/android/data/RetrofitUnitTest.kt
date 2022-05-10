@@ -24,7 +24,7 @@ class RetrofitUnitTest {
         .build()
 
     private val api = Retrofit.Builder()
-        .baseUrl(mockWebServer.url("https://api.github.com"))
+        .baseUrl(mockWebServer.url(BuildConfig.BASE_URL))
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -40,7 +40,7 @@ class RetrofitUnitTest {
 
         runBlocking {
             val actual = api.getRepository(
-                token = "token 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",
+                token = "token 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",
                 query = "Android",
                 page = 1,
                 perPage = 10

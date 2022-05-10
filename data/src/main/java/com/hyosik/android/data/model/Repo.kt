@@ -1,6 +1,9 @@
 package com.hyosik.android.data.model
 
-data class Item(
+import com.google.gson.annotations.SerializedName
+import com.hyosik.android.domain.model.GithubRepo
+
+data class Repo(
     val allow_forking: Boolean,
     val archive_url: String,
     val archived: Boolean,
@@ -51,7 +54,8 @@ data class Item(
     val merges_url: String,
     val milestones_url: String,
     val mirror_url: Any,
-    val name: String,
+    @SerializedName("name")
+    val _name: String,
     val node_id: String,
     val notifications_url: String,
     val open_issues: Int,
@@ -76,8 +80,17 @@ data class Item(
     val topics: List<Any>,
     val trees_url: String,
     val updated_at: String,
-    val url: String,
+    @SerializedName("url")
+    val _url: String,
     val visibility: String,
     val watchers: Int,
     val watchers_count: Int
-)
+) : GithubRepo {
+
+    override val name: String
+        get() = _name
+
+    override val url: String
+        get() = _url
+
+}

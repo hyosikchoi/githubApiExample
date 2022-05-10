@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="githubApiExample.buildSrc" target="11" />
       <module name="MultiModuleEx.app" target="11" />
+      <module name="MultiModuleEx.buildSrc" target="11" />
       <module name="MultiModuleEx.data" target="11" />
       <module name="MultiModuleEx.presentation" target="11" />
     </bytecodeTargetLevel>
