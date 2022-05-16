@@ -21,8 +21,8 @@ class MainViewModel @Inject constructor(
     private val _repoListStateFlow = MutableStateFlow<State>(State.UnInitialized)
     private val _progressView = MutableStateFlow<Int>(View.GONE)
 
-    val repoListStateFlow : StateFlow<State> get() =  _repoListStateFlow
-    val progressView : StateFlow<Int> get() =  _progressView
+    val repoListStateFlow : StateFlow<State> get() =  _repoListStateFlow.asStateFlow()
+    val progressView : StateFlow<Int> get() =  _progressView.asStateFlow()
 
     fun getRepo(query : String , page : Int , perPage : Int) = viewModelScope.launch {
         getGithubRepositoryUseCase(query = query , page = page , perPage = perPage)

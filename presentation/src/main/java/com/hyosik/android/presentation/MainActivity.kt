@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.hyosik.android.presentation.adapter.GithubRepositoryAdapter
 import com.hyosik.android.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -19,25 +20,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        binding.githubRecyclerView.adapter = GithubRepositoryAdapter()
         init()
-        observeData()
     }
 
     private fun init() {
         viewModel.getRepo("Android" , 1 , 20)
-    }
-
-    private fun observeData()  {
-        lifecycleScope.launch {
-            viewModel.repoListStateFlow.collect { state ->
-                when(state) {
-                    is State.UnInitialized -> {}
-                    is State.Loading -> {}
-                    is State.Success -> { Log.d("repo" , state.repoList.toString())}
-                    is State.Error -> {}
-                }
-            }
-        }
     }
 
 }

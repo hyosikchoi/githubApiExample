@@ -41,7 +41,8 @@ data class Repo(
     val homepage: Any,
     val hooks_url: String,
     val html_url: String,
-    val id: Int,
+    @SerializedName("id")
+    val _id: Int,
     val is_template: Boolean,
     val issue_comment_url: String,
     val issue_events_url: String,
@@ -92,5 +93,8 @@ data class Repo(
 
     override val url: String
         get() = _url
+
+    override val id: Int
+        get() = _id
 
 }

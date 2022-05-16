@@ -18,6 +18,18 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/githubRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            tools:listitem="@layout/item_github_view_holder"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:items="@{viewModel.repoListStateFlow.repoList}"
+            />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
