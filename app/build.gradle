@@ -29,6 +29,9 @@ dependencies {
     implementation Libraries.OKHTTP
     implementation Libraries.OKHTTP_LOGGING_INTERCEPTOR
 
+    // Paging 3
+    implementation AndroidX.PAGING
+
 
     implementation project(":data")
     implementation project(":domain")

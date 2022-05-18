@@ -30,6 +30,9 @@ dependencies {
     implementation(Libraries.OKHTTP)
     implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
 
+    // Paging 3
+    implementation AndroidX.PAGING
+
     testImplementation(UnitTest.MOCK_WEB_SERVER)
     testImplementation(UnitTest.TRUTH)
     androidTestImplementation(AndroidTest.ANDROID_TRUTH)

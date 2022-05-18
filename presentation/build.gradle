@@ -27,6 +27,9 @@ dependencies {
     implementation Google.HILT_ANDROID
     kapt Google.HILT_ANDROID_COMPILER
 
+    // Paging 3
+    implementation AndroidX.PAGING
+
     implementation(AndroidX.ACTIVITY_KTX)
     implementation(AndroidX.FRAGMENT_KTX)
     implementation(AndroidX.LIFECYCLE_VIEWMODEL_KTX)

@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hyosik.android.domain.model.GithubRepo
 import com.hyosik.android.domain.usecase.GetGithubRepositoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,21 +26,9 @@ class MainViewModel @Inject constructor(
     val repoListStateFlow : StateFlow<State> get() =  _repoListStateFlow.asStateFlow()
     val progressView : StateFlow<Int> get() =  _progressView.asStateFlow()
 
-    fun getRepo(query : String , page : Int , perPage : Int) = viewModelScope.launch {
-        getGithubRepositoryUseCase(query = query , page = page , perPage = perPage)
-            .onStart {
-                showProgress()
-            }
-            .onCompletion {
-                hideProgress()
-            }
-            .catch { exception ->
-                _repoListStateFlow.value = State.Error
-            }
-            .collect { value: List<GithubRepo> ->
-                _repoListStateFlow.value = State.Success(value)
-            }
-    }
+    val repos = getGithubRepositoryUseCase(query = "Android" , page = 1 , perPage = 20)
+
+//    fun getRepo(query : String , page : Int , perPage : Int) =
 
     fun showProgress() {
         _progressView.value = View.VISIBLE
@@ -47,5 +37,21 @@ class MainViewModel @Inject constructor(
     fun hideProgress() {
         _progressView.value = View.GONE
     }
+
+//    viewModelScope.launch {
+//        getGithubRepositoryUseCase(query = query , page = page , perPage = perPage)
+//            .onStart {
+//                showProgress()
+//            }
+//            .onCompletion {
+//                hideProgress()
+//            }
+//            .catch { exception ->
+//                _repoListStateFlow.value = State.Error
+//            }
+//            .collect { value: List<GithubRepo> ->
+//                _repoListStateFlow.value = State.Success(value)
+//            }
+//    }
 
 }

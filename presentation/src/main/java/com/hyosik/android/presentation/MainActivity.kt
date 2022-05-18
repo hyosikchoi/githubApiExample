@@ -25,7 +25,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun init() {
-        viewModel.getRepo("Android" , 1 , 20)
+        lifecycleScope.launch {
+            viewModel.repos.collect {
+                (binding.githubRecyclerView.adapter as GithubRepositoryAdapter).submitData(it)
+            }
+        }
     }
 
 }

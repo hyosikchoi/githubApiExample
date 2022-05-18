@@ -11,4 +11,8 @@ java {
 dependencies {
     implementation(Kotlin.KOTLIN_STDLIB)
     implementation(Kotlin.COROUTINES_CORE)
+
+    // Paging 3
+    implementation AndroidX.PAGING_COMMON
+
 }

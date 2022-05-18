@@ -1,5 +1,6 @@
 package com.hyosik.android.domain.usecase
 
+import androidx.paging.PagingData
 import com.hyosik.android.domain.model.GithubRepo
 import com.hyosik.android.domain.repository.GithubRepository
 import kotlinx.coroutines.CoroutineScope
@@ -10,11 +11,11 @@ import kotlinx.coroutines.launch
 
 class GetGithubRepositoryUseCase(private val githubRepository: GithubRepository) {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         query: String,
         page: Int,
         perPage: Int,
-    ) : Flow<List<GithubRepo>> {
+    ) : Flow<PagingData<GithubRepo>> {
         return githubRepository.getRepository(query = query, page = page, perPage = perPage)
     }
 }

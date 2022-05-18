@@ -20,6 +20,7 @@ object Versions {
     const val ANDROID_JUNIT = "1.1.2"
     const val ESPRESSO_CORE = "3.3.0"
     const val TRUTH = "1.0.1"
+    const val PAGING = "3.1.1"
 }
 
 object Kotlin {
@@ -38,6 +39,8 @@ object AndroidX {
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+    const val PAGING = "androidx.paging:paging-runtime:${Versions.PAGING}"
+    const val PAGING_COMMON = "androidx.paging:paging-common:${Versions.PAGING}"
 }
 
 object Google {
