@@ -21,22 +21,5 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getGithubRepositoryUseCase : GetGithubRepositoryUseCase
 ) : ViewModel() {
-
-    private val _repoListStateFlow = MutableStateFlow<State>(State.UnInitialized)
-    private val _progressView = MutableStateFlow<Int>(View.GONE)
-
-    val repoListStateFlow : StateFlow<State> get() =  _repoListStateFlow.asStateFlow()
-    val progressView : StateFlow<Int> get() =  _progressView.asStateFlow()
-
     val repos = getGithubRepositoryUseCase(query = "Android" , page = 1 , perPage = 30).cachedIn(viewModelScope)
-    val scope : CoroutineScope = CoroutineScope(viewModelScope.coroutineContext + Dispatchers.IO)
-
-    fun showProgress() {
-        _progressView.value = View.VISIBLE
-    }
-
-    fun hideProgress() {
-        _progressView.value = View.GONE
-    }
-
 }

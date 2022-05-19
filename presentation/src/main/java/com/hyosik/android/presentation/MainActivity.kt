@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.hyosik.android.presentation.adapter.GithubRepositoryAdapter
 import com.hyosik.android.presentation.adapter.ReposLoadStateAdapter
 import com.hyosik.android.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -33,11 +36,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun init() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             viewModel.repos.collect {
                 githubRepositoryAdapter.submitData(it)
             }
         }
+        lifecycleScope.launch(Dispatchers.Main) {
+            githubRepositoryAdapter.loadStateFlow.collect { loadState ->
+                val isListEmpty : Boolean = loadState.refresh is LoadState.NotLoading && githubRepositoryAdapter.itemCount == 0
+
+                binding.noResultTextView.isVisible = isListEmpty
+                binding.githubRecyclerView.isVisible = !isListEmpty
+                binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
+            }
+        }
+    }
+
+    fun clickOfRetry() {
+        githubRepositoryAdapter.retry()
     }
 
 }

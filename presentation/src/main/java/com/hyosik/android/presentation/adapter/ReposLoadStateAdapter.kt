@@ -50,12 +50,6 @@ class ReposLoadStateAdapter(
 
         fun bind(loadState: LoadState) {
             binding.loadState = loadState
-//            binding.progressBar.isVisible = loadState is LoadState.Loading
-//            binding.retryButton.isVisible = loadState is LoadState.Error
-//            binding.errorMsg.isVisible = loadState is LoadState.Error
-            if (loadState is LoadState.Error) {
-                binding.errorMsg.text = loadState.error.localizedMessage
-            }
         }
 
     }
