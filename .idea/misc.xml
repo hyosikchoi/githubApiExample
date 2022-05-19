@@ -8,6 +8,9 @@
         <entry key="..\:/MultiModuleEx/presentation/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
         <entry key="..\:/MultiModuleEx/presentation/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/MultiModuleEx/presentation/src/main/res/layout/item_github_view_holder.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/soc/Documents/githubApiExample/presentation/src/main/res/layout/activity_main.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/soc/Documents/githubApiExample/presentation/src/main/res/layout/item_github_view_holder.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/soc/Documents/githubApiExample/presentation/src/main/res/layout/repos_load_state_footer_view_item.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

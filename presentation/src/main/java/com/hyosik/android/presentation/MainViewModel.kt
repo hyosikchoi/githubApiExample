@@ -11,6 +11,8 @@ import androidx.paging.cachedIn
 import com.hyosik.android.domain.model.GithubRepo
 import com.hyosik.android.domain.usecase.GetGithubRepositoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,9 +28,8 @@ class MainViewModel @Inject constructor(
     val repoListStateFlow : StateFlow<State> get() =  _repoListStateFlow.asStateFlow()
     val progressView : StateFlow<Int> get() =  _progressView.asStateFlow()
 
-    val repos = getGithubRepositoryUseCase(query = "Android" , page = 1 , perPage = 20)
-
-//    fun getRepo(query : String , page : Int , perPage : Int) =
+    val repos = getGithubRepositoryUseCase(query = "Android" , page = 1 , perPage = 30).cachedIn(viewModelScope)
+    val scope : CoroutineScope = CoroutineScope(viewModelScope.coroutineContext + Dispatchers.IO)
 
     fun showProgress() {
         _progressView.value = View.VISIBLE
@@ -37,21 +38,5 @@ class MainViewModel @Inject constructor(
     fun hideProgress() {
         _progressView.value = View.GONE
     }
-
-//    viewModelScope.launch {
-//        getGithubRepositoryUseCase(query = query , page = page , perPage = perPage)
-//            .onStart {
-//                showProgress()
-//            }
-//            .onCompletion {
-//                hideProgress()
-//            }
-//            .catch { exception ->
-//                _repoListStateFlow.value = State.Error
-//            }
-//            .collect { value: List<GithubRepo> ->
-//                _repoListStateFlow.value = State.Success(value)
-//            }
-//    }
 
 }
