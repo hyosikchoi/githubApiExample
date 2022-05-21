@@ -27,20 +27,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.githubRecyclerView.setHasFixedSize(true)
+        binding.adapter = githubRepositoryAdapter
         init()
-        binding.githubRecyclerView.adapter = githubRepositoryAdapter.withLoadStateHeaderAndFooter(
-                header = ReposLoadStateAdapter { githubRepositoryAdapter.retry() },
-                footer = ReposLoadStateAdapter { githubRepositoryAdapter.retry() }
-            )
-
     }
 
     private fun init() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.repos.collect {
-                githubRepositoryAdapter.submitData(it)
-            }
-        }
         lifecycleScope.launch(Dispatchers.Main) {
             githubRepositoryAdapter.loadStateFlow.collect { loadState ->
                 val isListEmpty : Boolean = loadState.refresh is LoadState.NotLoading && githubRepositoryAdapter.itemCount == 0

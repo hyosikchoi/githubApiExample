@@ -22,4 +22,5 @@ class MainViewModel @Inject constructor(
     private val getGithubRepositoryUseCase : GetGithubRepositoryUseCase
 ) : ViewModel() {
     val repos = getGithubRepositoryUseCase(query = "Android" , page = 1 , perPage = 30).cachedIn(viewModelScope)
+    val scope : CoroutineScope get() = viewModelScope
 }
