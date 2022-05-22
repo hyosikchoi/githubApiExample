@@ -14,7 +14,7 @@
 
         <variable
             name="adapter"
-            type="com.hyosik.android.presentation.adapter.GithubRepositoryAdapter" />
+            type="com.hyosik.android.presentation.adapter.GithubRepositoryAdapter"/>
 
     </data>
 
@@ -38,7 +38,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:scrollbars="vertical"
-            app:items="@{viewModel.repos}"
+            android:visibility="@{viewModel.state.isSuccess}"
+            app:items="@{viewModel.state}"
             app:scope="@{viewModel.scope}"
             app:adapter="@{adapter}"
             />
@@ -47,7 +48,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{viewModel.state.isLoading}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +58,7 @@
             android:id="@+id/noResultTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{viewModel.state.isEmpty}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -72,8 +73,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/retry"
-            android:visibility="gone"
-            android:onClick="@{() -> mainActivity.clickOfRetry()}"
+            android:visibility="@{viewModel.state.isError}"
+            android:onClick="@{()-> mainActivity.clickOfRetry()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

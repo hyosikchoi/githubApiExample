@@ -1,7 +1,9 @@
 package com.hyosik.android.presentation.adapter
 
 import android.util.Log
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("items", "scope", "adapter")
 fun RecyclerView.setGithubRepo(
-    repoList: Flow<PagingData<GithubRepo>>?,
+    state: State?,
     scope: CoroutineScope?,
     adapter: GithubRepositoryAdapter?
 ) {
@@ -31,9 +33,9 @@ fun RecyclerView.setGithubRepo(
             header = ReposLoadStateAdapter { githubRepoAdapter.retry() },
             footer = ReposLoadStateAdapter { githubRepoAdapter.retry() }
         )
-        scope?.launch(Dispatchers.IO) {
-            repoList?.collect {
-                githubRepoAdapter.submitData(it)
+        if(state is State.Success) {
+            scope?.launch {
+               githubRepoAdapter.submitData(state.repoList)
             }
         }
 
@@ -47,5 +49,12 @@ fun TextView.setText(loadState: LoadState?) {
         this.text = loadState.error.localizedMessage
     } else {
         this.text = ""
+    }
+}
+
+@BindingAdapter("android:visibility")
+fun View.setVisible(isVisible : Boolean?) {
+    isVisible?.let {
+        this.isVisible = it
     }
 }

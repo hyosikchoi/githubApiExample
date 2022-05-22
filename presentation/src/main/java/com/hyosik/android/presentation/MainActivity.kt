@@ -2,6 +2,8 @@ package com.hyosik.android.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -26,22 +28,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
-        binding.githubRecyclerView.setHasFixedSize(true)
+        binding.githubRecyclerView.setHasFixedSize(false)
         binding.adapter = githubRepositoryAdapter
         init()
     }
 
     private fun init() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            githubRepositoryAdapter.loadStateFlow.collect { loadState ->
-                val isListEmpty : Boolean = loadState.refresh is LoadState.NotLoading && githubRepositoryAdapter.itemCount == 0
-
-                binding.noResultTextView.isVisible = isListEmpty
-                binding.githubRecyclerView.isVisible = !isListEmpty
-                binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-                binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
-            }
-        }
+        viewModel.fetchGithubRepositories("Android" , 1 , 30)
     }
 
     fun clickOfRetry() {
