@@ -19,9 +19,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.activity_main) {
 
-    private val viewModel: MainViewModel by viewModels()
+    override val viewModel: MainViewModel by viewModels()
 
     private val githubRepositoryAdapter = GithubRepositoryAdapter()
 
@@ -30,11 +30,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.viewModel = viewModel
         binding.githubRecyclerView.setHasFixedSize(false)
         binding.adapter = githubRepositoryAdapter
-        init()
-    }
-
-    private fun init() {
-        viewModel.fetchGithubRepositories("Android" , 1 , 30)
     }
 
     fun clickOfRetry() {

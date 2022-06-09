@@ -13,26 +13,25 @@ import com.hyosik.android.domain.model.GithubRepo
 import com.hyosik.android.domain.usecase.GetGithubRepositoryUseCase
 import com.hyosik.android.presentation.adapter.GithubRepositoryAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getGithubRepositoryUseCase: GetGithubRepositoryUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.UnInitialized)
     val state: StateFlow<State> = _state.asStateFlow()
     val scope: CoroutineScope get() = viewModelScope
 
-    fun fetchGithubRepositories(query: String, page: Int, perPage: Int) {
-          viewModelScope.launch(Dispatchers.IO) {
+    override fun fetchData(): Job = viewModelScope.launch(Dispatchers.IO) {
+        if(_state.value !is State.Success) {
             _state.value = State.Loading
-            val repo = getGithubRepositoryUseCase(query = query, page = page, perPage = perPage).cachedIn(viewModelScope)
+            val repo = getGithubRepositoryUseCase(query = "Android", page = 1, perPage = 30).cachedIn(
+                viewModelScope
+            )
             repo
                 .catch {
                     _state.value = State.Error
