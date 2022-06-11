@@ -22,22 +22,33 @@ class MainViewModel @Inject constructor(
     private val getGithubRepositoryUseCase: GetGithubRepositoryUseCase
 ) : BaseViewModel() {
 
-    private val _state: MutableStateFlow<State> = MutableStateFlow(State.UnInitialized)
+    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state.asStateFlow()
     val scope: CoroutineScope get() = viewModelScope
 
+    private var query = "Android"
+    private var searchMode : SearchMode = SearchMode.SEARCH
+
     override fun fetchData(): Job = viewModelScope.launch(Dispatchers.IO) {
-        if(_state.value !is State.Success) {
-            _state.value = State.Loading
-            val repo = getGithubRepositoryUseCase(query = "Android", page = 1, perPage = 30).cachedIn(
+        if(searchMode == SearchMode.SEARCH) {
+            val repo = getGithubRepositoryUseCase(query = query, page = 1, perPage = 30).cachedIn(
                 viewModelScope
             )
             repo
                 .catch {
                     _state.value = State.Error
+                    searchMode = SearchMode.READ
                 }.collect {
                     _state.value = State.Success(it)
+                    searchMode = SearchMode.READ
                 }
         }
+    }
+
+    fun searchRepository(query : String) {
+        this.query = query
+        _state.value = State.Loading
+        searchMode = SearchMode.SEARCH
+        fetchData()
     }
 }

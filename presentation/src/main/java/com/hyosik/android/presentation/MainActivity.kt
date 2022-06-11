@@ -30,10 +30,17 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
         binding.viewModel = viewModel
         binding.githubRecyclerView.setHasFixedSize(false)
         binding.adapter = githubRepositoryAdapter
+        init()
     }
 
-    fun clickOfRetry() {
-        githubRepositoryAdapter.retry()
+    private fun init() {
+        binding.searchImageButton.setOnClickListener {
+            val query = binding.searchEditText.text.toString()
+            Log.d("clickSearch" , query)
+            viewModel.searchRepository(query = query)
+        }
+        binding.retryButton.setOnClickListener {
+            githubRepositoryAdapter.retry()
+        }
     }
-
 }
