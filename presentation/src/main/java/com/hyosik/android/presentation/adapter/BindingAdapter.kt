@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("items", "scope", "adapter")
 fun RecyclerView.setGithubRepo(
-    state: State?,
+    repoList: PagingData<GithubRepo>?,
     scope: CoroutineScope?,
     adapter: GithubRepositoryAdapter?
 ) {
@@ -33,12 +33,11 @@ fun RecyclerView.setGithubRepo(
             header = ReposLoadStateAdapter { githubRepoAdapter.retry() },
             footer = ReposLoadStateAdapter { githubRepoAdapter.retry() }
         )
-        if(state is State.Success) {
-            scope?.launch {
-               githubRepoAdapter.submitData(state.repoList)
+        scope?.launch {
+            repoList?.let {
+                githubRepoAdapter.submitData(it)
             }
         }
-
     }
 
 }
@@ -52,9 +51,9 @@ fun TextView.setText(loadState: LoadState?) {
     }
 }
 
-@BindingAdapter("android:visibility")
-fun View.setVisible(isVisible : Boolean?) {
-    isVisible?.let {
-        this.isVisible = it
-    }
-}
+//@BindingAdapter("android:visibility")
+//fun View.setVisible(isVisible: Boolean?) {
+//    isVisible?.let {
+//        this.isVisible = it
+//    }
+//}

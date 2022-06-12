@@ -5,10 +5,6 @@
         <import type="android.view.View"/>
 
         <variable
-            name="mainActivity"
-            type="com.hyosik.android.presentation.MainActivity" />
-
-        <variable
             name="viewModel"
             type="com.hyosik.android.presentation.MainViewModel" />
 
@@ -34,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="25dp"
             android:inputType="text"
+            android:imeOptions="actionSearch"
             />
 
         <ImageButton
@@ -60,8 +57,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="15dp"
             android:scrollbars="vertical"
-            android:visibility="@{viewModel.state.isSuccess}"
-            app:items="@{viewModel.state}"
+            app:items="@{viewModel.repo}"
             app:scope="@{viewModel.scope}"
             app:adapter="@{adapter}"
             />
@@ -70,7 +66,6 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.state.isLoading}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +75,8 @@
             android:id="@+id/noResultTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.state.isEmpty}"
+            android:text="@string/no_result"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -95,7 +91,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/retry"
-            android:visibility="@{viewModel.state.isError}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
